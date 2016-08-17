@@ -1,0 +1,1507 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "TagN",
+        "description": "TagN API Explorer"
+    },
+    "host": "52.32.169.200",
+    "basePath": "/v1",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json",
+        "text/html",
+        "image/jpeg"
+    ],
+    "produces": [
+        "application/json",
+        "text/html",
+        "image/jpeg"
+    ],
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "The user JSON you want to post",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "avatar",
+                        "in": "formData",
+                        "description": "user avatar image",
+                        "type": "file",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create a new user",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/forgotpassword": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Send forgot password to user email",
+                "parameters": [
+                    {
+                        "name": "user_email",
+                        "in": "query",
+                        "description": "user email address",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Send forgot password to user email",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user object with access token",
+                "parameters": [
+                    {
+                        "name": "user_email",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user email",
+                        "required": true
+                    },
+                    {
+                        "name": "user_pass",
+                        "in": "query",
+                        "description": "user password",
+                        "type": "string",
+                        "required": true,
+                        "format": "password"
+                    },
+                    {
+                        "name": "user_device_token",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user device token",
+                        "required": false
+                    },
+                    {
+                        "name": "user_time_zone",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user time zone=> +8:00",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get authorized user",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    },
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "description": "The user JSON you want to post",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "avatar",
+                        "in": "formData",
+                        "description": "user avatar image",
+                        "type": "file",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update the user",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Change user password",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    },
+                    {
+                        "name": "user_current_pass",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user current password",
+                        "required": true
+                    },
+                    {
+                        "name": "user_new_pass",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user new password",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "change user password",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Logout user",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/images":{
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user images",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    },
+                    {
+                        "name": "page_num",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "page number",
+                        "required": true
+                    },
+                    {
+                        "name": "page_count",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "page count per page",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user images",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/images/share":{
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user share images",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    },
+                    {
+                        "name": "page_num",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "page number",
+                        "required": true
+                    },
+                    {
+                        "name": "page_count",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "page count per page",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get user share images",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/tag/{tag_id}":{
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Remove me from this tag",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    },
+                    {
+                        "name": "tag_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "tag id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remove me from this tag",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/tag/{tag_id}/users":{
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get users of specified tag",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    },
+                    {
+                        "name": "tag_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "tag id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get users of specified tag",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}/notifications":{
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all user notifications",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get all user notifications",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update all notifications as read",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "ID of the user",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update all notifications as read",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/tags": {
+            "post": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Create a new tag",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "tag",
+                        "in": "body",
+                        "description": "The tag JSON you want to post",
+                        "schema": {
+                            "$ref": "#/definitions/Tag"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create a new tag",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Mark tags as invisible",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "tag_ids",
+                        "in": "body",
+                        "description": "Tag ids with comma string",
+                        "schema": {
+                            "$ref": "#/definitions/Tag"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mark tags as invisible",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/tags/{id}": {
+            "delete": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Delete tag",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "string",
+                        "description": "Tag id",
+                        "required": true
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "user id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete tag",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/tags/{id}/images":{
+            "get": {
+                "tags": [
+                    "Tag"
+                ],
+                "summary": "Get tag images",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "tag id",
+                        "required": true
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "user id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get tag images",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/images": {
+            "post": {
+                "tags": [
+                    "Image"
+                ],
+                "summary": "Create a new image",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "image",
+                        "in": "body",
+                        "description": "The image JSON you want to post",
+                        "schema": {
+                            "$ref": "#/definitions/Image"
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "image",
+                        "in": "formData",
+                        "description": "image to be uploaded",
+                        "type": "file",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Create a new image",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Image"
+                ],
+                "summary": "Delete images",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "image_ids",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Image ids with comma separators",
+                        "required": true
+                    },
+                    {
+                        "name": "image_user_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "user id",
+                        "required": true
+                    },
+                    {
+                        "name": "image_user_name",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user name",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete images",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/images/{id}":{
+            "get": {
+                "tags": [
+                    "Image"
+                ],
+                "summary": "Get image with id",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "image id",
+                        "required": true
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "user id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get image with id",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/images/{id}/likes":{
+            "post": {
+                "tags": [
+                    "Image"
+                ],
+                "summary": "set like or unlike image",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "image id",
+                        "required": true
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "user id",
+                        "required": true
+                    },
+                    {
+                        "name": "user_name",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user name",
+                        "required": true
+                    },
+                    {
+                        "name": "image_tag_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "image tag id",
+                        "required": true
+                    },
+                    {
+                        "name": "is_like",
+                        "in": "query",
+                        "type": "boolean",
+                        "description": "user like => true, user dislike => false",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "set like or unlike image",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/images/{id}/comments":{
+            "get": {
+                "tags": [
+                    "Image"
+                ],
+                "summary": "Get image comments",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "image id",
+                        "required": true
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "user id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get image comments",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/images/{id}/likers":{
+            "get": {
+                "tags": [
+                    "Image"
+                ],
+                "summary": "Get image likers",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "image id",
+                        "required": true
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "user id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get image likers",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/shares":{
+            "post": {
+                "tags": [
+                    "Share"
+                ],
+                "summary": "Send share request to group",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "share_from_user_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "from user id",
+                        "required": true
+                    },
+                    {
+                        "name": "share_to_user_ids",
+                        "in": "query",
+                        "type": "string",
+                        "description": "user_ids to be shared with comma string",
+                        "required": true
+                    },
+                    {
+                        "name": "share_from_user_name",
+                        "in": "query",
+                        "description": "Request sender user name",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "share_tag_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "user_ids to be shared with comma string",
+                        "required": true
+                    },
+                    {
+                        "name": "share_tag_full_text",
+                        "in": "query",
+                        "description": "tag full text to be shared",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Send share request to user",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/shares/{id}":{
+            "patch": {
+                "tags": [
+                    "Share"
+                ],
+                "summary": "Response to share request",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "share id to be deleted",
+                        "required": true
+                    },
+                    {
+                        "name": "sender_user_name",
+                        "in": "query",
+                        "type": "string",
+                        "description": "sender user name",
+                        "required": true
+                    },
+                    {
+                        "name": "share_status",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "share status => 1:accept, -1:reject",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response to share request",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Share"
+                ],
+                "summary": "remove user from share tag",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "share id to be deleted",
+                        "required": true
+                    },
+                    {
+                        "name": "sender_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "sender user id",
+                        "required": true
+                    },
+                    {
+                        "name": "sender_user_name",
+                        "in": "query",
+                        "type": "string",
+                        "description": "sender user name",
+                        "required": true
+                    },
+                    {
+                        "name": "tag_full_text",
+                        "in": "query",
+                        "type": "string",
+                        "description": "tag full text to be unshared",
+                        "required": true
+                    },
+                    {
+                        "name": "receiver_id",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "receiver id to be unshared",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "remove user from share tag",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/notifications/{id}":{
+            "get": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get notification with id",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "notification id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get notification",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Remove notification",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "type": "integer",
+                        "description": "notification id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Remove notification",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/comments":{
+            "post": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Add Comment",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "share",
+                        "in": "body",
+                        "description": "The comment JSON you want to post",
+                        "schema": {
+                            "$ref": "#/definitions/Comment"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "add comment",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/comments/{id}":{
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Remove user comment",
+                "parameters": [
+                    {
+                        "name": "AccessToken",
+                        "in": "header",
+                        "type": "string",
+                        "description": "User Access Token",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "comment id to be deleted",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "remove user comment",
+                        "schema": {
+                            "$ref": "#/definitions/Result"
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "integer"
+                },
+                "user_name": {
+                    "type": "string"
+                },
+                "user_username": {
+                    "type": "string"
+                },
+                "user_email": {
+                    "type": "string"
+                },
+                "user_pass": {
+                    "type": "string",
+                    "format": "password"
+                },
+                "user_phone": {
+                    "type": "string"
+                },
+                "user_avatar_url": {
+                    "type": "string"
+                },
+                "user_device_token": {
+                    "type": "string"
+                },
+                "user_created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "user_time_zone": {
+                    "type": "string"
+                }
+            }
+        },
+        "Tag": {
+            "type": "object",
+            "properties": {
+                "tag_id": {
+                    "type": "integer"
+                },
+                "tag_user_id": {
+                    "type": "integer"
+                },
+                "tag_text": {
+                    "type": "string"
+                },
+                "tag_parent_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Image": {
+            "type": "object",
+            "properties": {
+                "image_id": {
+                    "type": "integer"
+                },
+                "image_user_id": {
+                    "type": "integer"
+                },
+                "image_tag_id": {
+                    "type": "integer"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "image_thumb_url": {
+                    "type": "string"
+                },
+                "image_width": {
+                    "type": "integer"
+                },
+                "image_height": {
+                    "type": "integer"
+                },
+                "image_created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Share": {
+            "type": "object",
+            "properties": {
+                "share_id": {
+                    "type": "integer"
+                },
+                "share_from_user_id": {
+                    "type": "integer"
+                },
+                "share_to_user_id": {
+                    "type": "integer"
+                },
+                "share_tag_id": {
+                    "type": "integer"
+                },
+                "share_status": {
+                    "type": "integer"
+                },
+                "share_created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Comment": {
+            "type": "object",
+            "properties": {
+                "comment_id": {
+                    "type": "integer"
+                },
+                "comment_user_id": {
+                    "type": "integer"
+                },
+                "comment_image_id": {
+                    "type": "integer"
+                },
+                "comment_string": {
+                    "type": "string"
+                },
+                "comment_created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Result": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "messages": {
+                    "type": "object"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "messages": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
